@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Painel da Escola | Aprendendo a Crescer</title>
+<style>
+:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#153f42;background:#f8f8f4;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
+a{color:inherit}input,textarea{width:100%;outline:none;border:1px solid #d9e1dc;border-radius:11px;padding:13px 14px;background:#fff;color:#183e43;font-size:14px;transition:border-color .15s}
+input:focus,textarea:focus{border-color:#078c8c;box-shadow:0 0 0 3px #079c9c1b}textarea{min-height:110px;resize:vertical;line-height:1.6}
+small{font-size:12px;color:#789192}h1,h2,h3,p{margin-top:0}h1{font-family:Georgia,serif;font-size:clamp(28px,3vw,38px);letter-spacing:-.025em}h2{font-family:Georgia,serif;font-size:27px}h3{font-size:16px;margin-bottom:8px}
+.btn{border:0;border-radius:11px;padding:13px 20px;background:#f76708;color:white;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px #f767081f}
+.btn.secondary{background:white;color:#17464a;border:1px solid #d9e5e1;box-shadow:none}.btn.full{width:100%}.btn.small{padding:9px 12px;font-size:12px}.muted{color:#718888}.tag{display:inline-flex;align-items:center;border-radius:99px;background:#e8f4ee;color:#136b54;padding:5px 10px;font-size:11px;font-weight:800}
+#gate{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.gate-left{background:#074b52;color:white;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(30px,6vw,80px);position:relative;overflow:hidden}
+.gate-left:after{content:'';position:absolute;width:360px;height:360px;border:70px solid #f76708;border-radius:50%;right:-215px;bottom:-210px;opacity:.95}
+.wordmark{display:flex;align-items:center;gap:13px;font-weight:800}.emblem{width:43px;height:43px;background:#ffdd72;color:#f35a05;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:900}
+.gate-left h1{font-size:clamp(38px,5vw,67px);font-weight:600;line-height:1.12;max-width:600px}.gate-left p{max-width:480px;color:#d7eae9;line-height:1.8}.gate-right{display:grid;place-items:center;padding:40px 25px}.gate-card{width:min(100%,430px)}.gate-card p{line-height:1.7;color:#708a8a}.gate-card label,.field label{display:block;font-size:12px;font-weight:750;margin-bottom:8px}.gate-card .field{margin:19px 0}.help{font-size:12px;color:#718b8b;line-height:1.5}
+.error{padding:11px 14px;background:#fff0ed;border:1px solid #ffcdc1;color:#a63d24;border-radius:10px;font-size:13px;margin:12px 0}.success{padding:11px 14px;background:#e5f7ea;color:#175b3f;border-radius:10px;font-size:13px;margin:12px 0}
+#workspace{display:none;min-height:100svh}.layout{display:grid;grid-template-columns:255px minmax(0,1fr);min-height:100svh}
+.sidebar{background:#073e43;color:#e6f5f3;padding:27px 17px;display:flex;flex-direction:column;gap:25px;position:sticky;top:0;height:100svh}
+.sidebar .brand{padding:0 14px;display:flex;gap:11px;align-items:center;font-size:14px;font-weight:900}.sidebar .brand .emblem{width:37px;height:37px;border-radius:10px;font-size:22px}
+.sidebar .group-title{padding-left:16px;text-transform:uppercase;letter-spacing:.16em;color:#86adae;font-size:10px;font-weight:800;margin:8px 0 13px}
+.tabs{display:grid;gap:5px}.tab{display:flex;align-items:center;gap:12px;text-align:left;background:transparent;color:#b8d4d3;border:0;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:600}
+.tab[aria-current="page"]{background:#17646a;color:#fff}.tab:hover{background:#12555b}.tab .ico{width:19px;text-align:center;font-size:17px}
+.sidebar-bottom{margin-top:auto;border-top:1px solid #236168;padding-top:17px}.sidebar-bottom .side-link{display:block;text-decoration:none;font-size:13px;color:#cde5e4;padding:9px 14px}.sidebar button.side-link{width:100%;border:0;background:none;text-align:left;cursor:pointer}
+.content{padding:0 40px 100px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e6eae6;height:87px;gap:12px}
+.kicker{font-size:10px;font-weight:850;letter-spacing:.16em;color:#f06407;text-transform:uppercase}.topbar-right{display:flex;align-items:center;gap:12px}
+.main{max-width:1120px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-end;padding:40px 0 23px;gap:20px;flex-wrap:wrap}.page-head p{color:#788a8a;line-height:1.6;margin-bottom:0}
+.section-panel{background:#fff;border:1px solid #e8ebe5;border-radius:17px;padding:28px;margin-bottom:21px;box-shadow:0 4px 16px #103d3b08}
+.section-head{display:flex;justify-content:space-between;gap:20px;margin-bottom:22px;align-items:center}.section-head p{margin:7px 0 0;color:#859493;font-size:13px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field{margin-bottom:16px}.field:last-child{margin-bottom:0}.field .hint{font-size:11px;color:#8b9b99;line-height:1.5;margin-top:6px}
+.grid-courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.course{border:1px solid #e4eae6;border-radius:14px;padding:18px;background:#fcfdfb}.course label{display:block;font-weight:800;font-size:14px;margin-bottom:9px}.course textarea{height:95px;min-height:85px}
+.image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.image-tile{border:1px solid #e2e8e4;border-radius:14px;padding:15px;background:#fbfdfa}
+.image-preview{display:grid;place-items:center;height:165px;background:#eff1ed;border-radius:11px;color:#8ca4a1;margin-bottom:13px;overflow:hidden}.image-preview img{width:100%;height:100%;object-fit:cover}.image-tile label{font-weight:800;font-size:13px}.image-tile input{font-size:12px;padding:10px}.image-tile button{margin-top:9px}
+.note{background:#fffae9;border-left:4px solid #eccf66;border-radius:7px;padding:14px 16px;font-size:12px;color:#716637;line-height:1.7}
+#toast{position:fixed;right:24px;bottom:24px;background:#174f4d;color:white;padding:15px 20px;border-radius:12px;box-shadow:0 12px 30px #153b3b30;display:none;z-index:10;max-width:min(380px,calc(100vw - 30px));font-size:13px}
+.savebar{position:sticky;bottom:16px;z-index:8;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#fff;border:1px solid #e5eae6;box-shadow:0 12px 45px #173a3e22;border-radius:13px;gap:12px;margin-top:25px}.savebar small{display:block;margin-top:3px}
+#page-content,#page-courses,#page-photos,#page-contact{display:none}.page.show{display:block!important}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{height:auto;position:static;display:block;padding:14px 18px}.sidebar .brand{margin-bottom:12px}.sidebar .group-title,.sidebar-bottom{display:none}.tabs{display:flex;overflow:auto;gap:3px}.tab{white-space:nowrap;padding:11px 12px;font-size:12px}.content{padding:0 20px 45px}.topbar{height:65px}.page-head{padding-top:26px}.section-panel{padding:21px}}
+@media(max-width:650px){#gate{grid-template-columns:1fr}.gate-left{min-height:220px;padding:28px}.gate-left h1{font-size:31px}.gate-left p{display:none}.gate-right{padding:32px 20px}.form-grid,.grid-courses,.image-grid{grid-template-columns:1fr}.page-head{align-items:flex-start}.topbar-right .tag{display:none}.section-head{align-items:flex-start}.savebar{bottom:6px}.savebar small{display:none}.savebar .btn{width:100%}}
+</style>
+</head>
+<body>
+<div id="gate">
+ <div class="gate-left"><div class="wordmark"><span class="emblem">ABC</span><span>Aprendendo a Crescer<br><small style="font-weight:400;color:#b8d5d0">Painel administrativo</small></span></div><div><p class="kicker" style="color:#ffa15b">GESTÃO DO SITE</p><h1>Seu site.<br>Suas mudanças.<br>Em um só lugar.</h1><p>Edite textos, turmas, fotos e contatos sem precisar abrir código nem solicitar uma nova publicação.</p></div><small style="color:#afcac9">Área exclusiva de administração</small></div>
+ <div class="gate-right"><div class="gate-card"><p class="kicker">ACESSO PROTEGIDO</p><h1 id="gate-title">Entrar no painel</h1><p id="gate-description">Informe suas credenciais para editar o site da escola.</p><form id="gate-form">
+  <div class="field" id="setup-field" hidden><label for="setup-token">Código de ativação inicial</label><input id="setup-token" autocomplete="off" type="password" placeholder="Código fornecido na configuração"></div>
+  <div class="field"><label for="user-email">E-mail do administrador</label><input id="user-email" type="email" autocomplete="username" placeholder="voce@escola.com.br" required></div>
+  <div class="field"><label for="user-password">Senha</label><input id="user-password" type="password" autocomplete="current-password" minlength="12" placeholder="Sua senha de acesso" required></div>
+  <div id="gate-feedback" role="status" aria-live="polite"></div><button id="gate-button" class="btn full" type="submit">Acessar painel →</button>
+  <p class="help" id="gate-help">Seu login é protegido. Somente o administrador pode modificar o site.</p>
+ </form></div></div>
+</div>
+<div id="workspace">
+<div class="layout">
+ <aside class="sidebar"><div class="brand"><span class="emblem">ABC</span><span>Aprendendo<br>a Crescer</span></div><div><div class="group-title">Gerenciar site</div><div class="tabs" role="navigation" aria-label="Seções do painel">
+  <button class="tab" data-page="content" aria-current="page"><span class="ico">▣</span>Textos do site</button>
+  <button class="tab" data-page="courses"><span class="ico">▦</span>Turmas</button>
+  <button class="tab" data-page="photos"><span class="ico">▧</span>Fotos e logo</button>
+  <button class="tab" data-page="contact"><span class="ico">✆</span>Contatos</button>
+ </div></div><div class="sidebar-bottom"><a class="side-link" target="_blank" rel="noopener noreferrer" href="https://aprendendo-a-crescer-site-v3.onrender.com">↗ Ver site público</a><button class="side-link" id="logout">Sair da conta</button></div></aside>
+ <div class="content"><div class="topbar"><div><div class="kicker">PAINEL DA ESCOLA</div><strong>Conteúdo e aparência</strong></div><div class="topbar-right"><span class="tag">● Editor conectado</span><a class="btn secondary small" target="_blank" rel="noopener noreferrer" href="https://aprendendo-a-crescer-site-v3.onrender.com">Ver site ↗</a></div></div>
+ <main class="main"><form id="editor">
+  <section id="page-content" class="page show"><div class="page-head"><div><div class="kicker">01 / CONTEÚDO</div><h1>Textos do site</h1><p>Atualize as mensagens principais que as famílias veem.</p></div></div>
+   <div class="section-panel"><div class="section-head"><div><h3>Primeira impressão</h3><p>Título e descrição da página inicial</p></div><span class="tag">Início</span></div>
+    <div class="field"><label for="heroTitle">Título principal</label><input name="heroTitle" id="heroTitle" maxlength="150" required></div>
+    <div class="field"><label for="heroSubtitle">Texto de apresentação</label><textarea name="heroSubtitle" id="heroSubtitle" maxlength="1500" required></textarea></div>
+   </div>
+   <div class="section-panel"><div class="section-head"><div><h3>Sobre a escola</h3><p>Apresente a escola com suas próprias palavras</p></div></div>
+    <div class="field"><label for="aboutTitle">Título da seção</label><input name="aboutTitle" id="aboutTitle" maxlength="150" required></div>
+    <div class="field"><label for="aboutText">Primeiro parágrafo</label><textarea name="aboutText" id="aboutText" required></textarea></div>
+    <div class="field"><label for="aboutText2">Segundo parágrafo</label><textarea name="aboutText2" id="aboutText2" required></textarea></div>
+   </div>
+   <div class="section-panel"><div class="section-head"><div><h3>Matrículas e visitas</h3><p>Texto que aparece ao lado do formulário</p></div></div>
+    <div class="field"><label for="registrationTitle">Título</label><input name="registrationTitle" id="registrationTitle" required></div>
+    <div class="field"><label for="registrationText">Descrição</label><textarea name="registrationText" id="registrationText" required></textarea></div>
+   </div>
+  </section>
+  <section id="page-courses" class="page"><div class="page-head"><div><div class="kicker">02 / TURMAS</div><h1>Nossas turmas</h1><p>Edite as apresentações. Os nomes das etapas permanecem padronizados no formulário.</p></div></div>
+    <div class="section-panel"><div class="section-head"><div><h3>Descrição das seis etapas</h3><p>Os cards continuam organizados na ordem da escola</p></div></div><div class="grid-courses" id="courses-fields"></div></div>
+  </section>
+  <section id="page-photos" class="page"><div class="page-head"><div><div class="kicker">03 / IMAGENS</div><h1>Fotos e identidade</h1><p>Troque as imagens diretamente pelo computador ou celular.</p></div></div>
+    <div class="section-panel"><div class="section-head"><div><h3>Biblioteca do site</h3><p>As fotos selecionadas serão usadas após salvar.</p></div></div><div class="image-grid" id="images-fields"></div></div>
+    <div class="note">Use somente fotos que a escola está autorizada a publicar. Para fotos com crianças, confirme o consentimento e as autorizações pertinentes. Os arquivos são otimizados antes do envio.</div>
+  </section>
+  <section id="page-contact" class="page"><div class="page-head"><div><div class="kicker">04 / CONTATOS</div><h1>Atendimento da escola</h1><p>Os dados publicados aqui também atualizam o WhatsApp do formulário.</p></div></div>
+   <div class="section-panel"><div class="section-head"><div><h3>Telefone e endereço</h3><p>Dados usados nos botões de contato e nas mensagens</p></div></div>
+    <div class="form-grid"><div class="field"><label for="whatsapp">WhatsApp com DDD</label><input name="whatsapp" id="whatsapp" inputmode="tel" required placeholder="(19) 98155-3803"></div>
+    <div class="field"><label for="email">E-mail (opcional)</label><input name="email" id="email" type="email" placeholder="escola@exemplo.com"></div></div>
+    <div class="field"><label for="address">Endereço completo</label><textarea name="address" id="address" required></textarea></div>
+   </div>
+   <div class="section-panel"><div class="section-head"><div><h3>Texto da seção contato</h3></div></div>
+    <div class="field"><label for="contactTitle">Título</label><input name="contactTitle" id="contactTitle" required></div>
+    <div class="field"><label for="contactText">Descrição</label><textarea name="contactText" id="contactText" required></textarea></div>
+   </div>
+   <div class="note">As famílias ainda precisam confirmar o envio no WhatsApp. Este painel não guarda os dados pessoais do formulário de matrícula.</div>
+  </section>
+  <div class="savebar"><div><strong id="save-label">Alterações no site</strong><small id="save-detail">Revise os campos antes de publicar.</small></div><button class="btn" type="submit" id="save-btn">Salvar alterações ↗</button></div>
+ </form></main></div>
+</div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const $=(q)=>document.querySelector(q);
+const current={data:null,revision:0};
+let setupMode=false;
+let busy=false;
+const fields=['heroTitle','heroSubtitle','aboutTitle','aboutText','aboutText2','registrationTitle','registrationText','contactTitle','contactText','whatsapp','email','address'];
+const courses=['Berçário 1','Berçário 2','Mini Grupo','Maternal','Jardim 1','Jardim 2'];
+const images=[['logo','Logo oficial'],['hero','Foto principal'],['about','Foto sobre a escola'],['activity1','Galeria: primeira foto'],['activity2','Galeria: segunda foto']];
+function feedback(text,kind){const d=$('#gate-feedback');d.className=kind||'error';d.textContent=text}
+function toast(text){const x=$('#toast');x.textContent=text;x.style.display='block';setTimeout(()=>x.style.display='none',4000)}
+async function api(url,opts={}){
+ const r=await fetch(url,{credentials:'same-origin',...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});
+ const p=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(p.error||'Erro de conexão com servidor');
+ return p;
+}
+function gateMode(setup){
+ setupMode=setup;
+ $('#setup-field').hidden=!setup;
+ $('#gate-title').textContent=setup?'Ativar seu painel':'Entrar no painel';
+ $('#gate-description').textContent=setup?'Crie o primeiro acesso administrativo da escola.':'Entre com o e-mail e a senha cadastrados.';
+ $('#gate-button').textContent=setup?'Criar meu acesso →':'Acessar painel →';
+ $('#gate-help').textContent=setup?'O código só funciona na ativação inicial. Escolha uma senha com 12 ou mais caracteres.':'Se esqueceu sua senha, procure quem administra o servidor.';
+ $('#user-password').autocomplete=setup?'new-password':'current-password';
+}
+async function init(){
+ try{await loadAdmin();}catch(e){
+  $('#workspace').style.display='none';$('#gate').style.display='grid';
+  try{const m=await api('/api/meta');gateMode(!m.configured)}catch(_){feedback('Não foi possível conectar ao servidor. Recarregue a página.')}
+ }
+}
+$('#gate-form').addEventListener('submit',async(e)=>{
+ e.preventDefault();if(busy)return;busy=true;$('#gate-button').disabled=true;feedback('Verificando acesso...','success');
+ try{
+  const email=$('#user-email').value,password=$('#user-password').value;
+  if(setupMode){
+   await api('/api/setup',{method:'POST',body:JSON.stringify({token:$('#setup-token').value,email,password})});
+   gateMode(false);feedback('Acesso criado. Entre com seu e-mail e sua senha.','success');
+  }else{
+   await api('/api/login',{method:'POST',body:JSON.stringify({email,password})});
+   await loadAdmin();
+  }
+ }catch(err){feedback(err.message,'error')}
+ finally{busy=false;$('#gate-button').disabled=false}
+});
+async function loadAdmin(){
+ const p=await api('/api/admin/content');current.data=p.data;current.revision=p.revision;
+ buildCourses();buildImages();fill();
+ $('#gate').style.display='none';$('#workspace').style.display='block';
+ $('#save-detail').textContent='Última edição: '+new Date(p.updated_at).toLocaleString('pt-BR');
+}
+function buildCourses(){
+ const area=$('#courses-fields');area.replaceChildren();
+ courses.forEach((name,i)=>{
+  const tile=document.createElement('div');tile.className='course';
+  const l=document.createElement('label');l.htmlFor='course'+i;l.textContent=String(i+1).padStart(2,'0')+' · '+name;
+  const t=document.createElement('textarea');t.name='course'+i;t.id='course'+i;t.maxLength=650;t.required=true;
+  tile.append(l,t);area.append(tile);
+ });
+}
+function buildImages(){
+ const area=$('#images-fields');area.replaceChildren();
+ images.forEach(([key,label])=>{
+  const tile=document.createElement('div');tile.className='image-tile';
+  const title=document.createElement('label');title.htmlFor='upload-'+key;title.textContent=label;
+  const prev=document.createElement('div');prev.className='image-preview';prev.id='prev-'+key;prev.textContent='Imagem padrão do site';
+  const inp=document.createElement('input');inp.type='file';inp.id='upload-'+key;inp.accept='image/jpeg,image/png,image/webp';
+  const b=document.createElement('button');b.className='btn secondary small';b.type='button';b.textContent='Voltar à imagem padrão';
+  inp.addEventListener('change',async()=>{
+   const f=inp.files[0];if(!f)return;
+   try{const url=await processImage(f);current.data.images[key]=url;showPreview(key,url);toast('Imagem preparada. Clique em Salvar alterações.')}
+   catch(err){toast(err.message)}finally{inp.value=''}
+  });
+  b.addEventListener('click',()=>{current.data.images[key]='';showPreview(key,'');toast('Imagem padrão selecionada. Salve para publicar.')});
+  tile.append(title,prev,inp,b);area.append(tile);
+ });
+}
+async function processImage(file){
+ if(!file.type.startsWith('image/')||file.size>10*1024*1024)throw Error('Selecione uma foto JPG, PNG ou WebP de até 10 MB.');
+ const image=await createImageBitmap(file);
+ const max=1250,scale=Math.min(1,max/Math.max(image.width,image.height));
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));
+ const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0,canvas.width,canvas.height);image.close?.();
+ let quality=.78,data='';
+ for(let i=0;i<6;i++){data=canvas.toDataURL('image/webp',quality);if(data.length<525000)break;quality-=.11}
+ if(data.length>=525000)throw Error('Imagem grande demais. Escolha uma imagem menor.');
+ return data;
+}
+function showPreview(key,src){const el=$('#prev-'+key);el.replaceChildren();if(src){const img=document.createElement('img');img.src=src;img.alt='Prévia da imagem';el.append(img)}else el.textContent='Imagem padrão do site'}
+function fill(){
+ for(const f of fields){const el=document.getElementById(f);if(el)el.value=current.data[f]??''}
+ courses.forEach((_,i)=>$('#course'+i).value=current.data.courses[i]);
+ images.forEach(([key])=>showPreview(key,current.data.images?.[key]||''));
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(t=>t.removeAttribute('aria-current'));
+ b.setAttribute('aria-current','page');
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id==='page-'+b.dataset.page));
+ window.scrollTo({top:0,behavior:'smooth'});
+}));
+$('#editor').addEventListener('submit',async(e)=>{
+ e.preventDefault();if(busy)return;
+ busy=true;$('#save-btn').disabled=true;$('#save-btn').textContent='Salvando...';
+ try{
+  const data={...current.data,images:{...current.data.images}};
+  fields.forEach(f=>data[f]=document.getElementById(f).value.trim());
+  data.courses=courses.map((_,i)=>$('#course'+i).value.trim());
+  const p=await api('/api/admin/content',{method:'PUT',body:JSON.stringify({revision:current.revision,data})});
+  current.data=data;current.revision=p.revision;
+  $('#save-label').textContent='Alterações publicadas';
+  $('#save-detail').textContent='Salvo em '+new Date(p.updated_at).toLocaleString('pt-BR');
+  toast('Salvo! O site público será atualizado ao carregar ou atualizar a página.');
+ }catch(err){toast('Não foi possível salvar: '+err.message)}
+ finally{busy=false;$('#save-btn').disabled=false;$('#save-btn').textContent='Salvar alterações ↗'}
+});
+$('#logout').addEventListener('click',async()=>{try{await api('/api/logout',{method:'POST',body:'{}'})}catch(_){ }window.location.reload()});
+init();
+</script>
+</body></html>
