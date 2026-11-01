@@ -231,7 +231,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #fa
         <button type="submit" class="button button-primary form-submit">Continuar pelo WhatsApp <span aria-hidden="true">↗</span></button><p class="form-help">O WhatsApp será aberto com a mensagem pronta. Revise os dados e confirme o envio no aplicativo.</p><div role="status" id="form-status" aria-live="polite"></div>
       </form></div></div></section>
 
-    <section id="contato" class="section contact-section"><div class="container contact-grid"><div><div class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> ESTAMOS AQUI PARA CONVERSAR</div><h2>Uma conversa pode ser o <em>começo</em> de tudo.</h2><p>Quer saber sobre as turmas, as matrículas ou conhecer a Aprendendo a Crescer? Fale pelo WhatsApp ou telefone (19) 98155-3803.</p><div class="contact-list"><div class="contact-list-item"><span class="contact-list-icon">↗</span><div><strong>Telefone e WhatsApp</strong><p id="contact-whatsapp">WhatsApp: (19) 98155-3803</p></div></div><div class="contact-list-item"><span class="contact-list-icon">✉</span><div><strong>E-mail</strong><p id="contact-email">Aguardando e-mail oficial</p></div></div><div class="contact-list-item"><span class="contact-list-icon">⌖</span><div><strong>Endereço</strong><p id="contact-address">Endereço a confirmar</p></div></div></div></div><div class="contact-art" aria-hidden="true"><div class="contact-art-shape one"></div><div class="contact-art-shape two"></div><div class="contact-art-shape three"></div><span class="art-small">O FUTURO TEM UM</span><span class="art-big">montão de<br><em>possibilidades!</em></span><span class="art-sun">✳</span><div class="art-bottom">Aprendendo a Crescer ✳</div></div></div></section>
+    <section id="contato" class="section contact-section"><div class="container contact-grid"><div><div class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> ESTAMOS AQUI PARA CONVERSAR</div><h2>Uma conversa pode ser o <em>começo</em> de tudo.</h2><p>Quer saber sobre as turmas, as matrículas ou conhecer a Aprendendo a Crescer? Fale pelo WhatsApp (19) 98155-3803 ou consulte nosso endereço para uma visita.</p><div class="contact-list"><div class="contact-list-item"><span class="contact-list-icon">↗</span><div><strong>Telefone e WhatsApp</strong><p id="contact-whatsapp">WhatsApp: (19) 98155-3803</p></div></div><div class="contact-list-item"><span class="contact-list-icon">✉</span><div><strong>E-mail</strong><p id="contact-email">Aguardando e-mail oficial</p></div></div><div class="contact-list-item"><span class="contact-list-icon">⌖</span><div><strong>Endereço</strong><p id="contact-address">Rua Márcio Eduardo Moura, 5 — Jardim Nova Terra (Nova Veneza), Sumaré - SP, CEP 13179-011</p></div></div></div></div><div class="contact-art" aria-hidden="true"><div class="contact-art-shape one"></div><div class="contact-art-shape two"></div><div class="contact-art-shape three"></div><span class="art-small">O FUTURO TEM UM</span><span class="art-big">montão de<br><em>possibilidades!</em></span><span class="art-sun">✳</span><div class="art-bottom">Aprendendo a Crescer ✳</div></div></div></section>
 
     <section class="faq-section section"><div class="container faq-grid"><div><div class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> DÚVIDAS FREQUENTES</div><h2>Quer saber <em>mais?</em></h2></div><div class="faq-list"><details><summary>Quais turmas a escola oferece?<span aria-hidden="true">+</span></summary><p>A escola apresenta as turmas Berçário 1, Berçário 2, Mini Grupo, Maternal, Jardim 1 e Jardim 2. Para informações sobre idade e organização, entre em contato com a escola.</p></details><details><summary>Como posso conhecer a escola?<span aria-hidden="true">+</span></summary><p>Entre em contato pelo WhatsApp (19) 98155-3803 para consultar a disponibilidade de visitas.</p></details><details><summary>Como saber sobre vagas e matrículas?<span aria-hidden="true">+</span></summary><p>As condições, o calendário e a disponibilidade de vagas devem ser confirmados diretamente com a escola.</p></details><details><summary>Posso enviar uma mensagem pelo site?<span aria-hidden="true">+</span></summary><p>Sim. Preencha o formulário para abrir uma mensagem pronta no WhatsApp. Confira os dados e confirme o envio para a escola no aplicativo.</p></details></div></div></section>
   </main>
@@ -244,7 +244,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #fa
 window.ESCOLA_CONFIG = Object.freeze({
   whatsapp: "5519981553803",
   email: "",
-  endereco: ""
+  endereco: "Rua Márcio Eduardo Moura, 5 — Jardim Nova Terra (Nova Veneza), Sumaré - SP, CEP 13179-011"
 });
 
 </script><script>
@@ -289,7 +289,14 @@ window.ESCOLA_CONFIG = Object.freeze({
     const phoneLink=document.createElement("a");phoneLink.href="tel:+5519981553803";phoneLink.textContent="Ligar: (19) 98155-3803";phoneLink.style.cssText="display:block;margin-top:6px";whatsEl.append(phoneLink);
   }
   if(validEmail){const a=document.createElement('a');a.href='mailto:'+config.email;a.textContent=config.email;emailEl.replaceChildren(a)}
-  if(config.endereco)addressEl.textContent=config.endereco;
+  if(config.endereco && addressEl){
+    const mapLink=document.createElement('a');
+    mapLink.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(config.endereco);
+    mapLink.target='_blank';
+    mapLink.rel='noopener noreferrer';
+    mapLink.textContent=config.endereco+' · Ver no mapa ↗';
+    addressEl.replaceChildren(mapLink);
+  }
 
   const turmaEl = $('#turma');
   document.querySelectorAll('[data-turma]').forEach(card => card.addEventListener('click',()=>{turmaEl.value=card.dataset.turma}));
@@ -312,7 +319,7 @@ window.ESCOLA_CONFIG = Object.freeze({
     return iso <= todayLocal;
   };
   const getMessage = (nome, crianca, nascimento, telefone, email, turma, mensagem) =>
-    `Olá! Meu nome é ${nome}, responsável por ${crianca} (nascimento: ${formatDate(nascimento)}). Gostaria de receber informações sobre a turma ${turma} da escola Aprendendo a Crescer.\nMeu WhatsApp: ${telefone}.${email?'\nMeu e-mail: '+email+'.':''}${mensagem?'\nMinha mensagem: '+mensagem:''}\nObrigado(a)!`;
+    `Olá! Meu nome é ${nome}, responsável por ${crianca} (nascimento: ${formatDate(nascimento)}). Gostaria de receber informações sobre a turma ${turma} da escola Aprendendo a Crescer.\nMeu WhatsApp: ${telefone}.${email?'\nMeu e-mail: '+email+'.':''}${mensagem?'\nMinha mensagem: '+mensagem:''}\n\nEndereço da escola: ${config.endereco}\nObrigado(a)!`;
   const birthInput = $('#data-nascimento');
   // Impede selecionar datas futuras no calendário, inclusive no navegador móvel.
   const localToday = new Date();
