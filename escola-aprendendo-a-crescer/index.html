@@ -225,7 +225,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #fa
           <div><label for="data-nascimento">Data de nascimento <span>*</span></label><input id="data-nascimento" name="data_nascimento" type="date" autocomplete="off" required aria-describedby="data-nascimento-ajuda"><span id="data-nascimento-ajuda" class="field-hint">Dia, mês e ano de nascimento da criança</span></div>
         </div>
         <div class="form-row"><div><label for="telefone">Seu WhatsApp <span>*</span></label><input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" minlength="10" maxlength="20" required></div><div><label for="email">E-mail <small>(opcional)</small></label><input id="email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="voce@exemplo.com"></div></div>
-        <label for="turma">Turma de interesse <span>*</span></label><select id="turma" name="turma" required><option value="" disabled selected>Selecione uma turma</option><option>Berçário 1</option><option>Berçário 2</option><option>Mini Grupo</option><option>Maternal</option><option>Jardim 1</option><option>Jardim 2</option></select>
+        <label for="turma">Turma de interesse <span>*</span></label><select id="turma" name="turma" required><option value="" disabled selected>Selecione uma turma</option><option>Berçário</option><option>Mini Grupo</option><option>Maternal</option><option>Jardim 1</option><option>Jardim 2</option></select>
         <label for="mensagem">Mensagem <small>(opcional)</small></label><textarea id="mensagem" name="mensagem" maxlength="500" rows="3" placeholder="O que você gostaria de saber?"></textarea>
         <label class="consent-row" for="consentimento"><input id="consentimento" name="consentimento" type="checkbox" required><span>Como responsável, concordo em compartilhar os dados informados (inclusive nome e data de nascimento da criança) pelo WhatsApp com a escola, após revisar e confirmar o envio no aplicativo. Este formulário não armazena os dados em um banco de dados. Saiba mais na <a href="privacidade.html">Política de Privacidade</a>.</span></label>
         <button type="submit" class="button button-primary form-submit">Continuar pelo WhatsApp <span aria-hidden="true">↗</span></button><p class="form-help">O WhatsApp será aberto com a mensagem pronta. Revise os dados e confirme o envio no aplicativo.</p><div role="status" id="form-status" aria-live="polite"></div>
@@ -299,7 +299,7 @@ window.ESCOLA_CONFIG = Object.freeze({
   }
 
   const turmaEl = $('#turma');
-  document.querySelectorAll('[data-turma]').forEach(card => card.addEventListener('click',()=>{turmaEl.value=card.dataset.turma}));
+  document.querySelectorAll('[data-turma]').forEach(card => card.addEventListener('click',()=>{const turma = card.dataset.turma; turmaEl.value = (turma === 'Berçário 1' || turma === 'Berçário 2') ? 'Berçário' : turma;}));
   const form = $('#interest-form');
   const status = $('#form-status');
   const dialog = $('#preview-dialog');
