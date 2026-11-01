@@ -241,11 +241,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #fa
 // DADOS OFICIAIS DA ESCOLA
 // Preencha apenas quando confirmar com o responsável. Não use dados fictícios.
 // WhatsApp: somente números com DDI e DDD, exemplo 5511999999999.
-window.ESCOLA_CONFIG = Object.freeze({
+window.ESCOLA_CONFIG = {
   whatsapp: "5519981553803",
   email: "",
   endereco: "Rua Márcio Eduardo Moura, 5 — Jardim Nova Terra (Nova Veneza), Sumaré - SP, CEP 13179-011"
-});
+};
 
 </script><script>
 (function(){
@@ -365,6 +365,81 @@ window.ESCOLA_CONFIG = Object.freeze({
   dialog?.addEventListener('click',(e)=>{if(e.target===dialog)dialog.close()});
 })();
 
+</script>
+
+<script id="escola-cms">
+/* Conteúdo publicado pelo painel, com página estática de reserva quando a API não estiver acessível. */
+(async function(){
+  'use strict';
+  const origin='https://aprendendo-a-crescer-admin.onrender.com';
+  const q=s=>document.querySelector(s);
+  const text=(selector,value)=>{
+    const node=q(selector);
+    if(node && typeof value==='string' && value.trim() && node.textContent.replace(/\s+/g,' ').trim() !== value.trim())node.textContent=value.trim();
+  };
+  const setImage=(selector,value,alt)=>{
+    if(!value)return;
+    const img=q(selector);if(img){img.src=value;img.alt=alt||img.alt;img.classList.remove('photo-unavailable');}
+  };
+  try{
+    const response=await fetch(origin+'/api/public',{mode:'cors',cache:'no-store'});
+    if(!response.ok)throw Error('sem conteúdo remoto');
+    const payload=await response.json();
+    if(!payload || !payload.data || typeof payload.data!=='object')return;
+    const d=payload.data;
+    text('.hero-copy h1',d.heroTitle);
+    text('.hero-copy > p',d.heroSubtitle);
+    text('.about-copy h2',d.aboutTitle);
+    const about=document.querySelectorAll('.about-copy > p');
+    if(about[0] && d.aboutText && about[0].textContent.trim()!==d.aboutText)about[0].textContent=d.aboutText;
+    if(about[1] && d.aboutText2 && about[1].textContent.trim()!==d.aboutText2)about[1].textContent=d.aboutText2;
+    text('.lead-copy h2',d.registrationTitle);
+    text('.lead-copy > p',d.registrationText);
+    text('.contact-grid > div:first-child h2',d.contactTitle);
+    text('.contact-grid > div:first-child > p',d.contactText);
+    const courseDescriptions=document.querySelectorAll('.turma-card .card-bottom p');
+    if(Array.isArray(d.courses))d.courses.slice(0,6).forEach((val,i)=>{if(courseDescriptions[i]&&typeof val==='string')courseDescriptions[i].textContent=val});
+    const config=window.ESCOLA_CONFIG;
+    if(config){
+      const digits=String(d.whatsapp||'').replace(/\D/g,'');
+      if(/^55\d{10,11}$/.test(digits))config.whatsapp=digits;
+      if(typeof d.email==='string')config.email=d.email;
+      if(typeof d.address==='string' && d.address.trim())config.endereco=d.address.trim();
+      const telephone=config.whatsapp.replace(/^55/,'');
+      let shown=telephone;
+      if(telephone.length===11)shown='('+telephone.slice(0,2)+') '+telephone.slice(2,7)+'-'+telephone.slice(7);
+      else if(telephone.length===10)shown='('+telephone.slice(0,2)+') '+telephone.slice(2,6)+'-'+telephone.slice(6);
+      const whatsapp=q('#contact-whatsapp');
+      if(whatsapp){
+        const a=document.createElement('a');a.href='https://wa.me/'+config.whatsapp+'?text='+encodeURIComponent('Olá! Gostaria de conhecer a escola Aprendendo a Crescer.');a.target='_blank';a.rel='noopener noreferrer';a.textContent='Conversar no WhatsApp: '+shown+' ↗';
+        const phone=document.createElement('a');phone.href='tel:+'+config.whatsapp;phone.textContent='Ligar: '+shown;phone.style.cssText='display:block;margin-top:6px';
+        whatsapp.replaceChildren(a,phone);
+      }
+      const email=q('#contact-email');if(email && config.email){const a=document.createElement('a');a.href='mailto:'+config.email;a.textContent=config.email;email.replaceChildren(a)}
+      const address=q('#contact-address');if(address && config.endereco){const a=document.createElement('a');a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(config.endereco);a.target='_blank';a.rel='noopener noreferrer';a.textContent=config.endereco+' · Ver no mapa ↗';address.replaceChildren(a)}
+      const tel=q('.announcement-inner a[href^="tel:"]');
+      if(tel){tel.href='tel:+'+config.whatsapp;tel.textContent='☎ '+shown;tel.setAttribute('aria-label','Ligar para a escola no telefone '+shown)}
+      text('.lead-notice','Atendimento pelo WhatsApp: '+shown+'. Ao finalizar, você poderá revisar e enviar sua solicitação.');
+    }
+    if(d.images && typeof d.images==='object'){
+      const imgs=d.images;
+      if(imgs.logo){document.querySelectorAll('.brand-icon img, .hero-logo-seal img').forEach(img=>{img.src=imgs.logo;img.alt='Logo da Aprendendo a Crescer'})}
+      setImage('.hero-photo img',imgs.hero,'Foto da Escola Aprendendo a Crescer');
+      setImage('.about-photo img',imgs.about,'Foto da Escola Aprendendo a Crescer');
+      const experiences=document.querySelectorAll('.experience-photo img');
+      if(experiences[0] && imgs.activity1){experiences[0].src=imgs.activity1;experiences[0].alt='Foto da Escola Aprendendo a Crescer'}
+      if(experiences[1] && imgs.activity2){experiences[1].src=imgs.activity2;experiences[1].alt='Foto da Escola Aprendendo a Crescer'}
+      if(imgs.hero)q('.illustrative-caption')?.remove();
+      if(imgs.about)q('.illustrative-label')?.remove();
+      if(imgs.activity1 || imgs.activity2){
+        const disclaimer=q('.photo-disclaimer');
+        if(disclaimer)disclaimer.textContent='Fotografias de referência podem ser ilustrativas. Fotos enviadas pela escola são publicadas mediante autorização.';
+      }
+    }
+  }catch(err){
+    /* Em caso de indisponibilidade da API, manter a versão estática já publicada. */
+  }
+})();
 </script>
 </body>
 </html>
